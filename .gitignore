@@ -162,5 +162,7 @@ mvnw
 mvnw.cmd
 .mvn
 
+
+application.properties
 # End of 
 
