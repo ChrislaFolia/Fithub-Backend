@@ -66,9 +66,9 @@ There are many great README templates available on GitHub; however, I didn't fin
 
 Here's why:
 
-- Your time should be focused on creating something amazing. A project that solves a problem and helps others
-- You shouldn't be doing the same tasks over and over like creating a README from scratch
-- You should implement DRY principles to the rest of your life :smile:
+- What your application does,
+- Why you used the technologies you used,
+- Some of the challenges you faced and features you hope to implement in the future.
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
@@ -82,85 +82,90 @@ Use the `BLANK_README.md` to get started.
   - [![MSSQL][MSSQL.com]][MSSQL-url]
     <br/><br/>
 - Backend
-  - [![Java][Java.com]][Java-url]
   - [![SpringBoot][SpringBoot.com]][SpringBoot-url]
   - [![Hibernate][Hibernate.com]][Hibernate-url]
     <br/><br/>
 - Frontend
   - [![HTML5][HTML5.com]][HTML5-url]
   - [![CSS][CSS.com]][CSS-url]
-  - [![JavaScript][JavaScript.com]][JavaScript-url]
   - [![Vue][Vue.js]][Vue-url]
   - [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-  <br/><br/>
+    <br/><br/>
+
+```mermaid
+flowchart LR
+
+FrontStage <--Axios\nRESTful API--> server
+BackStage <--Axios\nRESTful API--> server
+server <--Hibernate\nORM--> DB
+
+FrontStage["<big>Client Backstage</big>\n<small>Vue+Vite+Pinia"]:::simple
+BackStage["<big>Client Frontstage</big>\n<small>Vue+Vite+Pinia"]:::simple
+server["<big>Server</big>\n<small>SpringBoot"]:::simple
+DB[("<big>Database</big>\n<small>MSSQL")]:::simple
+
+```
+
   <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
+- STS (Spring Tool 4)
+- Maven project
+- Microsoft SQL Server
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+1. Establish a Maven project in STS
+1. Clone the repo
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/ChrislaFolia/Fithub-backend.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+
+1. Configuration setting up in `application.properties`
+
+   ```java
+   # port
+   server.port = 8080
+
+   # ContextPath
+   server.servlet.context-path = /fithub
+
+   # DB connection
+    spring.datasource.driver-class-name=com.microsoft.sqlserver.jdbc.SQLServerDriver
+    spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=Fithub;encrypt=true;trustServerCertificate=true
+    spring.datasource.username = yourUserName
+    spring.datasource.password = yourPassword
+
+   # JPA Config
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.SQLServerDialect
+    spring.jpa.show-sql=false
+    spring.jpa.properties.hibernate.format_sql = false
+    spring.jpa.hibernate.naming.physical-strategy = org. hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+   # open put and delete request
+   spring.mvc.hiddenmethod.filter.enabled = true
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
+
+1. Force update the Fithub project
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Working on the project
 
-- Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-- Run the development task: `npm start`
-  - Starts a server running at http://localhost:8080
+- Move into the project directory
+- Run the development task:
+  - Starts a server running at http://localhost:8080/fithub
   - Automatically restarts when any of your files change
 
 ## Databases
 
-By default, the template is configured to connect to a MongoDB database using Mongoose. It can be changed to connect to a PostgreSQL database using Knex by replacing any imports of `db-mongoose.js` with imports of `db-knex.js`, and uncommenting the Postgres `DATABASE_URL` lines in `config.js`.
-
-## Deployment
-
-Requires the [Heroku CLI client](https://devcenter.heroku.com/articles/heroku-command-line).
-
-### Setting up the project on Heroku
-
-- Move into the project directory: `cd ~/YOUR_PROJECTS_DIRECTORY/YOUR_PROJECT_NAME`
-- Create the Heroku app: `heroku create PROJECT_NAME`
-
-- If your backend connects to a database, you need to configure the database URL:
-
-  - For a MongoDB database: `heroku config:set DATABASE_URL=mongodb://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-  - For a PostgreSQL database: `heroku config:set DATABASE_URL=postgresql://USERNAME:PASSWORD@HOST:PORT/DATABASE_NAME`
-
-- If you are creating a full-stack app, you need to configure the client origin: `heroku config:set CLIENT_ORIGIN=https://www.YOUR_DEPLOYED_CLIENT.com`
-
-### Deploying to Heroku
-
-- Push your code to Heroku: `git push heroku master`
+The Fithub project is configured to connect to a Microsoft SQL Server database (MSSQL) using SQL Server Management Studio (SSMS).
 
 <!-- USAGE EXAMPLES -->
 
