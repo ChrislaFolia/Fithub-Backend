@@ -54,17 +54,14 @@ Fithub 是一間致力於促進健康生活方式的專業健身中心。我們�
 * Fithub 專案的前端-後端-資料庫結構如下：
 
 ```mermaid
-flowchart LR
-
-FrontStage <--Axios\nRESTful API--> server
-BackStage <--Axios\nRESTful API--> server
-server <--Hibernate\n(ORM)--> DB
-
-FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple
-BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple
-server["<big>Server</big>\n<small>SpringBoot"]:::simple
-DB[("<big>Database</big>\n<small>MSSQL")]:::simple
-
+flowchart LR;
+FrontStage <--Axios\nRESTful API--> server;
+BackStage <--Axios\nRESTful API--> server;
+server <--Hibernate\n(ORM)--> DB;
+FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
+BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
+server["<big>Server</big>\n<small>SpringBoot"]:::simple;
+DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 ```
 
   <p align="right">(<a href="#readme-top">back to top</a>)</p>

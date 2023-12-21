@@ -48,20 +48,15 @@
 * The frontend-backend-database structure of the Fithub project is as follow:
 
 ```mermaid
-flowchart LR
-
-FrontStage <--Axios\nRESTful API--> server
-BackStage <--Axios\nRESTful API--> server
-server <--Hibernate\n(ORM)--> DB
-
-FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple
-BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple
-server["<big>Server</big>\n<small>SpringBoot"]:::simple
-DB[("<big>Database</big>\n<small>MSSQL")]:::simple
-
+flowchart LR;
+FrontStage <--Axios\nRESTful API--> server;
+BackStage <--Axios\nRESTful API--> server;
+server <--Hibernate\n(ORM)--> DB;
+FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
+BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
+server["<big>Server</big>\n<small>SpringBoot"]:::simple;
+DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 ```
-
-  <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
