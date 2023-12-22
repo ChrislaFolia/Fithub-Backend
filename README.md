@@ -49,12 +49,14 @@
 
 ```mermaid
 flowchart LR;
+
 FrontStage <--Axios\nRESTful API--> server;
 BackStage <--Axios\nRESTful API--> server;
-server <--Hibernate\n(ORM)--> DB;
+server <--Hibernate\nORM--> DB;
+
 FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
 BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
-server["<big>Server</big>\n<small>SpringBoot"]:::simple;
+server["<big>Server&nbsp&nbsp</big>\n<small>SpringBoot&nbsp&nbsp&nbsp"]:::simple;
 DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 ```
 

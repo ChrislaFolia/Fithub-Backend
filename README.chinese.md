@@ -5,7 +5,6 @@
 </div>
 
 <!-- TABLE OF CONTENTS -->
-<!-- TABLE OF CONTENTS -->
 
 ## Table of Contents
 
@@ -24,8 +23,6 @@
 
 &emsp;
 Fithub 是一間致力於促進健康生活方式的專業健身中心。我們旨在鼓勵並引導個人建立規律的運動習慣，超越舒適區，實現身心健康，以更堅定的姿態迎接各種挑戰。作為您健身之旅的伙伴，Fithub 提供多樣化的訓練課程和場地租借服務，讓您能夠在專業指導下享受運動的樂趣，並將其融入日常生活。無論您是初學者還是有豐富鍛練經驗者，我們都致力於為您提供最適合的訓練方案，讓您在健康之路上取得持久的成就。立足於優質設施和熱情教練的支持下，Fithub 期待能與您攜手，共同塑造健康、活力的生活方式。
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 系統環境及架構
 
@@ -55,16 +52,16 @@ Fithub 是一間致力於促進健康生活方式的專業健身中心。我們�
 
 ```mermaid
 flowchart LR;
+
 FrontStage <--Axios\nRESTful API--> server;
 BackStage <--Axios\nRESTful API--> server;
-server <--Hibernate\n(ORM)--> DB;
+server <--Hibernate\nORM--> DB;
+
 FrontStage["<big>Client Backstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
 BackStage["<big>Client Frontstage</big>\n<small>Vite + Vue + Pinia"]:::simple;
-server["<big>Server</big>\n<small>SpringBoot"]:::simple;
+server["<big>Server&nbsp&nbsp</big>\n<small>SpringBoot&nbsp&nbsp&nbsp"]:::simple;
 DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 ```
-
-  <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 
