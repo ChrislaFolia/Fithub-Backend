@@ -69,6 +69,7 @@ DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 - STS (Spring Tool 4)
 - Maven project
 - Microsoft SQL Server
+- ngrok
 
 ### Installation
 
@@ -109,9 +110,26 @@ DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
 ### Working on the project
 
 - Move into the project directory
-- Run the development task:
+- Run the development task on STS:
   - Starts a server running at http://localhost:8080/fithub
   - Automatically restarts when any of your files change
+
+### HTTP Endpoints
+
+- Run `ngrok.exe`
+- Add authtoken
+
+  ```sh
+  ngrok config add-authtoken <token>
+  ```
+
+- Start a tunnel
+
+  ```sh
+  ngrok http 8080
+  ```
+
+- References for ngrok HTTP Endpoints: [Link](https://ngrok.com/docs/http/)
 
 ## Database
 

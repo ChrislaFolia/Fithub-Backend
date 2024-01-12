@@ -117,6 +117,23 @@ DB[("<big>Database</big>\n<small>MSSQL")]:::simple;
    - 啟動伺服器，運行於 http://localhost:8080/fithub
    - 在任何檔案變更時伺服器會自動重新啟動
 
+### HTTP 端點
+
+- 執行 `ngrok.exe`
+- 新增身份驗證令牌
+
+  ```sh
+  ngrok config add-authtoken <token>
+  ```
+
+- 啓動 tunnel
+
+  ```sh
+  ngrok http 8080
+  ```
+
+- ngrok HTTP 端點資訊請參考: [Link](https://ngrok.com/docs/http/)
+
 ## 資料庫
 
 Fithub 專案之資料庫配置，為使用 SQL Server Management Studio（SSMS） 連接至 Microsoft SQL Server 資料庫（MSSQL）。
