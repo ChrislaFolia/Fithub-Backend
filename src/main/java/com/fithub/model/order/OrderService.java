@@ -15,17 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fithub.model.orderitem.OrderItem;
 import com.fithub.model.orderitem.OrderItemRepository;
 
-
-
 @Service
 public class OrderService implements IOrderService {
 
 	@Autowired
 	private OrderRepository orderRepo;
-	
+
 	@Autowired
 	private OrderItemRepository orderItemRepo;
-	
+
 	@Override
 	public List<Order> findAll() {
 		return orderRepo.findAll();
@@ -47,8 +45,7 @@ public class OrderService implements IOrderService {
 		}
 		return false;
 	}
-	
-    
+
 	@Override
 	public Boolean updateConditionById(Integer orderId, String orderCondition) {
 		try {
@@ -58,6 +55,7 @@ public class OrderService implements IOrderService {
 			return false;
 		}
 	}
+
 	@Override
 	public Boolean deleteById(Integer id) {
 		Boolean result = orderRepo.existsById(id);
@@ -75,132 +73,66 @@ public class OrderService implements IOrderService {
 
 	}
 
-	
 	@Override
 	public Order findById(Integer id) {
 		Optional<Order> result = orderRepo.findById(id);
 		return result.get();
 	}
-	
 
 	@Override
 	public void deleteAllById(Iterable<Integer> selectIds) {
 		orderRepo.deleteAllById(selectIds);
-		
+
 	}
-//	@Transactional
-//	public Order createOrder(Order order) {
-//
-//        Order savedOrder = orderRepo.save(order);
-//        
-//       
-//        List<OrderItem> orderItems = new ArrayList<>();
-//        
-//        for (OrderItem item : order.getOrderItem()) {
-//            item.setOrderId(savedOrder.getOrderId()); 
-//            item.setClassId(item.getClassId()); 
-//            item.setCouponId(item.getCouponId()); 
-//
-//            orderItems.add(orderItemRepo.save(item));            
-//        }
-//        
-//        savedOrder.setOrderItem(orderItems);
-//        
-//        return savedOrder;
-//    }
-	
-//	@Override
-//    @Transactional
-//    public Order createOrder(Order order) {
-//
-//        try {
-//        // 取得複製orderitem集合
-//        int i = 0;
-//        int[] classids = new int[order.getOrderItem().size()];
-//        int[] couponids = new int[order.getOrderItem().size()];
-//
-//
-//        for (OrderItem orderitem : order.getOrderItem()) {
-//            classids[i] = orderitem.getClassId();
-//            couponids[i] = orderitem.getCouponId();
-//            i++;
-//        }
-//
-//
-//        // 清空OrderItem
-//        order.setOrderItem(null);
-//
-//        // 新增訂單取得訂單編號
-//        Order savedOrder = orderRepo.save(order);
-//        List<OrderItem> orderItems = new ArrayList<>();
-//
-//        for (int x = 0;x<classids.length;x++) {
-//            //建立訂單項目 塞入新集合
-//            OrderItem orderItem = new  OrderItem();
-//            orderItem.setOrderId(savedOrder.getOrderId());
-//            orderItem.setClassId(classids[x]);
-//            orderItem.setCouponId(couponids[x]);
-//            orderItems.add(orderItem);
-//        }
-//
-//
-//        order.setOrderItem(orderItems);
-//        Order resultOrder = orderRepo.save(order);
-//
-//        return resultOrder;
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
+
 	@Override
 	@Transactional
 	public Order createOrder(Order order) {
 
-	    try {
-	        // 取得複製orderitem集合
-	        int i = 0;
-	        int[] classids = new int[order.getOrderItem().size()];
-	        int[] couponids = new int[order.getOrderItem().size()];
+		try {
+			// 取得複製orderitem集合
+			int i = 0;
+			int[] classids = new int[order.getOrderItem().size()];
+			int[] couponids = new int[order.getOrderItem().size()];
 
-	        for (OrderItem orderItem : order.getOrderItem()) {
-	            classids[i] = orderItem.getClassId();
-	            couponids[i] = orderItem.getCouponId();
-	            i++;
-	        }
+			for (OrderItem orderItem : order.getOrderItem()) {
+				classids[i] = orderItem.getClassId();
+				couponids[i] = orderItem.getCouponId();
+				i++;
+			}
 
-	        // 清空OrderItem
-	        order.setOrderItem(null);
+			// 清空OrderItem
+			order.setOrderItem(null);
 
-	        // 新增訂單取得訂單編號
-	        Order savedOrder = orderRepo.save(order);
-	        List<OrderItem> orderItems = new ArrayList<>();
+			// 新增訂單取得訂單編號
+			Order savedOrder = orderRepo.save(order);
+			List<OrderItem> orderItems = new ArrayList<>();
 
-	        for (int x = 0; x < classids.length; x++) {
-	            // 建立訂單項目 塞入新集合
-	            OrderItem orderItem = new OrderItem();
-	            orderItem.setOrderId(savedOrder.getOrderId());
-	            orderItem.setClassId(classids[x]);
+			for (int x = 0; x < classids.length; x++) {
+				// 建立訂單項目 塞入新集合
+				OrderItem orderItem = new OrderItem();
+				orderItem.setOrderId(savedOrder.getOrderId());
+				orderItem.setClassId(classids[x]);
 
-	            // 只在第一筆訂單項目上設定couponId
-	            if (x == 0) {
-	                orderItem.setCouponId(couponids[x]);
-	            } else {
-	                // 在其他訂單項目上設為0或null，視情況而定
-	                orderItem.setCouponId(22); // 或者 orderItem.setCouponId(null);
-	            }
+				// 只在第一筆訂單項目上設定couponId
+				if (x == 0) {
+					orderItem.setCouponId(couponids[x]);
+				} else {
+					// 在其他訂單項目上設為0或null，視情況而定
+					orderItem.setCouponId(22); // 或者 orderItem.setCouponId(null);
+				}
 
-	            orderItems.add(orderItem);
-	        }
+				orderItems.add(orderItem);
+			}
 
-	        order.setOrderItem(orderItems);
-	        Order resultOrder = orderRepo.save(order);
+			order.setOrderItem(orderItems);
+			Order resultOrder = orderRepo.save(order);
 
-	        return resultOrder;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return null;
-	    }
+			return resultOrder;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// 查詢全部並分頁
@@ -208,13 +140,13 @@ public class OrderService implements IOrderService {
 	public Page<Order> findAllPage(String date, int number, int size) {
 		// 回傳第幾頁 每頁10筆
 		Pageable pageable = PageRequest.of(number, size);
-		return orderRepo.findAllPage(date,pageable);
+		return orderRepo.findAllPage(date, pageable);
 	}
-	
+
 	@Override
-	public Page<Order> findPageByMemberId(String date, Integer memberid,int number, int size){
+	public Page<Order> findPageByMemberId(String date, Integer memberid, int number, int size) {
 		Pageable pageable = PageRequest.of(number, size);
-		return orderRepo.findPageByMemberId(date,memberid,pageable);
+		return orderRepo.findPageByMemberId(date, memberid, pageable);
 	}
 
 	@Override
@@ -244,12 +176,11 @@ public class OrderService implements IOrderService {
 	// ChrisLafolia 返回在指定classId及memberId的的課程購買數量
 	@Override
 	public Map<String, Object> getAlreadyBuyAmountByClassIdANDMemberid(int classId, int memberId) {
-		Map<String, Object> result = orderRepo.getAlreadyBuyAmountByClassIdANDMemberid(classId,memberId);
-		if (result!=null) {
-			return result;			
+		Map<String, Object> result = orderRepo.getAlreadyBuyAmountByClassIdANDMemberid(classId, memberId);
+		if (result != null) {
+			return result;
 		}
 		return null;
 	}
-	
-	
+
 }
