@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fithub.model.classes.IClassesService;
 import com.fithub.model.course.Course;
 import com.fithub.model.course.ICourseService;
 
@@ -37,6 +38,9 @@ public class CourseController {
 
 	@Autowired
 	private ICourseService cService;
+
+	@Autowired
+	public IClassesService classesService;
 
 	private String imagePath = "C:/Programming/SpringBoot/workspace/Fithub/src/main/resources/static/images/course/";
 //	String imagePath = "classpath:\\static/images/course/";
@@ -136,14 +140,19 @@ public class CourseController {
 	@DeleteMapping("/{cid}")
 	public ResponseEntity<?> deleteCourse(@PathVariable("cid") int cid) {
 		try {
+			// Delete classes data first
+			if (classesService.exitsByCourseId(cid)) {
+				classesService.deleteAllByCourseId(cid);
+			}
+			Boolean resultBoolean = false;
 			Course resultBean = cService.findById(cid);
 			File destinationFile = new File(imagePath + resultBean.getCourseImgPath());
+			resultBoolean = cService.deleteById(cid);
 
 			// Delete the img file
-			if (destinationFile.exists()) {
+			if (destinationFile.exists() && resultBoolean) {
 				destinationFile.delete();
 			}
-			Boolean resultBoolean = cService.deleteById(cid);
 			return new ResponseEntity<>(resultBoolean, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);

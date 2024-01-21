@@ -14,7 +14,7 @@ public class CourseService implements ICourseService {
 
 	@Autowired
 	private CourseRepository courseRepo;
-	
+
 	@Override
 	public List<Course> findAll() {
 		return courseRepo.findAll();
@@ -45,11 +45,11 @@ public class CourseService implements ICourseService {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public void deleteAllById(Iterable<Integer> selectIds) {
 		courseRepo.deleteAllById(selectIds);
-		
+
 	}
 
 	@Override
@@ -67,16 +67,16 @@ public class CourseService implements ICourseService {
 	@Override
 	public Page<Course> findByPage(Integer pageNumber, Integer dataSize) {
 		// 按照courseId降冪排序
-		PageRequest pgb =PageRequest.of(pageNumber-1, dataSize, Sort.Direction.DESC, "courseId");
-		
+		PageRequest pgb = PageRequest.of(pageNumber - 1, dataSize, Sort.Direction.DESC, "courseId");
+
 		Page<Course> page = courseRepo.findAll(pgb);
 		return page;
 	}
 
 	@Override
-	public Page<Course> findCourseByCategoryId(Integer categoryId,Integer pageNumber, Integer dataSize) {
-		PageRequest pgb =PageRequest.of(pageNumber-1, dataSize, Sort.Direction.DESC, "courseId");
-		Page<Course> page = courseRepo.findByCategoryId(categoryId,pgb);
+	public Page<Course> findCourseByCategoryId(Integer categoryId, Integer pageNumber, Integer dataSize) {
+		PageRequest pgb = PageRequest.of(pageNumber - 1, dataSize, Sort.Direction.DESC, "courseId");
+		Page<Course> page = courseRepo.findByCategoryId(categoryId, pgb);
 		return page;
 	}
 

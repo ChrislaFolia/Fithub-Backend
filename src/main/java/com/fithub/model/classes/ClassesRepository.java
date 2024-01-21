@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -80,5 +81,14 @@ public interface ClassesRepository extends JpaRepository<Classes, Integer> {
 			+ "FROM Classes cl JOIN cl.course co JOIN co.courseCategories coc JOIN cl.wishlist w "
 			+ "JOIN cl.employee e JOIN cl.classroom r where w.memberId= :memberId AND w.wishRemoveDate IS NULL ORDER BY cl.classDate")
 	List<Map<String, Object>> findWishlistClassesByMemberId(@Param("memberId") int memberid);
+
+	// Chrislafolia，check whether classes exist in assigned courseId
+	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Classes c WHERE c.courseId = :courseId")
+	Boolean exitsByCourseId(@Param("courseId") Integer courseId);
+
+	// Chrislafolia，delete multiple classes exist in assigned courseId
+	@Modifying
+	@Query("DELETE FROM Classes WHERE courseId = :courseId")
+	void deleteAllByCourseId(@Param("courseId") Integer courseId);
 
 }

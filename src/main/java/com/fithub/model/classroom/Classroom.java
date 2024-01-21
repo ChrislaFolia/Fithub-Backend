@@ -17,12 +17,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
 @Table(name = "classroom")
 public class Classroom {
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,6 +52,7 @@ public class Classroom {
 	private Set<Classes> classes = new HashSet<Classes>();
 
 	@JsonIgnore
-	@OneToOne(fetch = FetchType.LAZY,mappedBy = "classroom")
+	@EqualsAndHashCode.Exclude
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "classroom")
 	private RentOrder rentOrder;
 }

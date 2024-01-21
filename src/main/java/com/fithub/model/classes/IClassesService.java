@@ -4,10 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.query.Param;
-
-import com.fithub.model.course.Course;
 
 public interface IClassesService {
 
@@ -26,8 +22,14 @@ public interface IClassesService {
 	// 刪除多筆
 	public void deleteAllById(Iterable<Integer> selectIds);
 
+	// 刪除多筆 classes, 根據 courseId
+	public void deleteAllByCourseId(Integer courseId);
+
 	// 確認id存在
 	public Boolean exitsById(Integer id);
+
+	// 確認 特定 courseId 的 classes 存在
+	public Boolean exitsByCourseId(Integer courseId);
 
 	// 查詢單筆
 	public Classes findById(Integer id);
@@ -54,9 +56,9 @@ public interface IClassesService {
 	// Chrislafolia，返回在指定時間内的所有classes資訊，分頁版
 	public Page<Map<String, Object>> findAllByDateRangeInPage(String startDate, String endDate, Integer pageNumber,
 			Integer dataSize);
-	
+
 	// Chrislafolia，返回在指定時間内的指定categoryId的classes資訊，分頁版
-	public Page<Map<String, Object>> findByDateRangeAndCategoryIdInPage(int categoryId,  String startDate,  String endDate,
-			Integer pageNumber,	Integer dataSize);
+	public Page<Map<String, Object>> findByDateRangeAndCategoryIdInPage(int categoryId, String startDate,
+			String endDate, Integer pageNumber, Integer dataSize);
 
 }

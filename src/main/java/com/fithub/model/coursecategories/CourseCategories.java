@@ -18,15 +18,15 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="coursecategories")
+@Table(name = "coursecategories")
 public class CourseCategories {
 
-	@Id 
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="categoryId")
+	@Column(name = "categoryId")
 	private int categoryId;
 
-	@Column(name="categoryName")
+	@Column(name = "categoryName")
 	private String categoryName;
 
 	@JsonIgnore

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ClassesService implements IClassesService {
@@ -57,9 +58,20 @@ public class ClassesService implements IClassesService {
 	}
 
 	@Override
+	@Transactional
+	public void deleteAllByCourseId(Integer courseId) {
+		classesRepo.deleteAllByCourseId(courseId);
+	}
+
+	@Override
 	public Boolean exitsById(Integer id) {
 		return classesRepo.existsById(id);
 
+	}
+
+	@Override
+	public Boolean exitsByCourseId(Integer courseId) {
+		return classesRepo.exitsByCourseId(courseId);
 	}
 
 	@Override
@@ -129,17 +141,18 @@ public class ClassesService implements IClassesService {
 		// 按照classDate升冪排序
 		PageRequest pgb = PageRequest.of(pageNumber - 1, dataSize, Sort.Direction.ASC, "classDate");
 		Page<Map<String, Object>> page = classesRepo.findAllByDateRangeInPage(startDate, endDate, pgb);
-		
+
 		return page;
 	}
-	
+
 	@Override
-	public Page<Map<String, Object>> findByDateRangeAndCategoryIdInPage(int categoryId,  String startDate,  String endDate,
-			Integer pageNumber,	Integer dataSize) {
+	public Page<Map<String, Object>> findByDateRangeAndCategoryIdInPage(int categoryId, String startDate,
+			String endDate, Integer pageNumber, Integer dataSize) {
 		// 按照classDate升冪排序
 		PageRequest pgb = PageRequest.of(pageNumber - 1, dataSize, Sort.Direction.ASC, "classDate");
-		Page<Map<String, Object>> page = classesRepo.findByDateRangeAndCategoryIdInPage(categoryId,startDate, endDate, pgb);
-		
+		Page<Map<String, Object>> page = classesRepo.findByDateRangeAndCategoryIdInPage(categoryId, startDate, endDate,
+				pgb);
+
 		return page;
 	}
 
