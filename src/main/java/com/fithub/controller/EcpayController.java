@@ -17,7 +17,6 @@ import com.fithub.model.order.OrderRepository;
 import com.fithub.model.order.OrderService;
 import com.fithub.model.rentorder.IRentOrderService;
 import com.fithub.model.rentorder.RentOrder;
-import com.fithub.model.rentorder.RentOrderRepository;
 
 import ecpay.payment.integration.ecpayOperator.EcpayFunction;
 
@@ -31,12 +30,11 @@ public class EcpayController {
 
 	@Autowired
 	IRentOrderService iRentOrderService;
-	
+
 	@Autowired
 	OrderService orderService;
 	@Autowired
 	OrderRepository orderRepository;
-	
 
 	@PostMapping("/ecpayCheckout")
 	public String ecpayCheckout(@RequestBody EcpayDetailDTO ecpayDetailDTO) {
@@ -44,30 +42,29 @@ public class EcpayController {
 
 		return aioCheckOutALLForm;
 	}
-	
+
 	@PostMapping("/ecpayCheckoutOrder")
 	public String ecpayCheckout(@RequestBody EcpayOrderDTO ecpayOrderDTO) {
 		String aioCheckOutALLForm = ecpayService.ecpayCheckout(ecpayOrderDTO);
 
 		return aioCheckOutALLForm;
 	}
-	
-	
 
 	// 取得綠界回傳資訊並回傳驗證,更新訂單狀態
 	@PostMapping("/callback")
 	public String handleCallback(@ModelAttribute EcpayDetails ecpayDetails) {
-		
-		
-		String rentOrderId = ecpayDetails.getMerchantTradeNo().substring(15); // 只保留索引15後的字串,去掉UUID
 
-		//判斷是否成功
-		if(ecpayDetails.getRtnCode().equals("1")) {
-		RentOrder rentOrder = new RentOrder();
-		rentOrder.setRentorderid(Integer.parseInt(rentOrderId));
-		rentOrder.setRentstatus("已付款");
-		Boolean updateResult =  iRentOrderService.updateRentstatusById(rentOrder.getRentorderid(),rentOrder.getRentstatus());
-		System.out.println(updateResult);
+		String rentOrderId = ecpayDetails.getMerchantTradeNo().substring(15); // 只保留索引15後的字串,去掉UUID
+//		System.out.println("Ecpay Callback");
+//		System.out.println("The RtnCode is " + ecpayDetails.getRtnCode());
+		// 判斷是否成功
+		if (ecpayDetails.getRtnCode().equals("1")) {
+			RentOrder rentOrder = new RentOrder();
+			rentOrder.setRentorderid(Integer.parseInt(rentOrderId));
+			rentOrder.setRentstatus("已付款");
+			Boolean updateResult = iRentOrderService.updateRentstatusById(rentOrder.getRentorderid(),
+					rentOrder.getRentstatus());
+//			System.out.println(updateResult);
 		}
 
 		// 產生驗證碼
@@ -78,26 +75,26 @@ public class EcpayController {
 		}
 		return null;
 	}
+
 	@PostMapping("/OrderCallback")
 	public String OrderhandleCallback(@ModelAttribute EcpayDetails ecpayDetails) {
-		
+
 		String OrderId = ecpayDetails.getMerchantTradeNo().substring(10); // 只保留索引10後的字串,去掉UUID
-		System.out.println(ecpayDetails);
-		if(ecpayDetails.getRtnCode().equals("1")) {
+//		System.out.println("Ecpay Callback");
+//		System.out.println("The RtnCode is " + ecpayDetails.getRtnCode());
+		if (ecpayDetails.getRtnCode().equals("1")) {
 			Order order = new Order();
 			order.setOrderId(Integer.parseInt(OrderId));
 			order.setOrderCondition("已付款");
 			System.out.println(order.getOrderId());
 			System.out.println(order.getOrderCondition());
-			
-			
-			Boolean updateOrder = orderService.updateConditionById(order.getOrderId(),order.getOrderCondition());
-			System.out.println(updateOrder);
+
+			Boolean updateOrder = orderService.updateConditionById(order.getOrderId(), order.getOrderCondition());
+//			System.out.println(updateOrder);
 		}
-		
-		
+
 		return null;
-		
+
 	}
-	
+
 }
