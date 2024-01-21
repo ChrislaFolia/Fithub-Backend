@@ -20,19 +20,15 @@ import lombok.Data;
 @Entity
 @Table(name = "couponcategories")
 public class CouponCategories {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "couponcategoriesid")
-    private Integer couponcategoriesid;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "couponcategoriesid")
+	private Integer couponcategoriesid;
 
-    private String couponcategoriesname;
-    
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "CouponCategories")
-    private List<Coupon> coupons = new ArrayList<>(); 
+	private String couponcategoriesname;
 
-    public CouponCategories() {
-        
-    }
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "CouponCategories")
+	private List<Coupon> coupons = new ArrayList<>();
+
 }
-
